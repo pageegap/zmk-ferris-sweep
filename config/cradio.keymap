@@ -56,7 +56,76 @@
         zmk,battery = &vbatt;
     };
 
+        combos {
+        compatible = "zmk,combos";
+
+        tab {
+            bindings = <&kp TAB>;
+            key-positions = <11 12>;
+        };
+
+        shift_tab {
+            bindings = <&kp LS(TAB)>;
+            key-positions = <12 13>;
+        };
+
+        muhennkann {
+            bindings = <&to_layer_0 INT_MUHENKAN>;
+            key-positions = <11 10>;
+        };
+
+        combo_esc {
+            timeout-ms = <50>;
+            key-positions = <6 7>;
+            bindings = <&kp ESC>;
+        };
+
+        right_enter {
+            timeout-ms = <100>;
+            key-positions = <30 31>;
+            bindings = <&kp ENTER>;
+        };
+
+        left_enter {
+            bindings = <&kp BACKSPACE>;
+            key-positions = <25 24>;
+        };
+
+        lockscreen {
+            bindings = <&kp LG(LC(Q))>;
+            key-positions = <4 5>;
+        };
+
+        printscreen {
+            bindings = <&kp LG(RS(N5))>;
+            key-positions = <17 14>;
+        };
+    };
+
+    macros {
+        to_layer_0: to_layer_0 {
+            compatible = "zmk,behavior-macro-one-param";
+            #binding-cells = <1>;
+            bindings = <&to 0 &macro_param_1to1 &kp MACRO_PLACEHOLDER>;
+            label = "TO_LAYER_0";
+        };
+
+        new_line: new_line {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LC(E) &kp ENTER>;
+            label = "NEW_LINE";
+        };
+    };
+
     behaviors {
+        showscreen: showscreen {
+            compatible = "zmk,behavior-tap-dance";
+            label = "SHOWSCREEN";
+            #binding-cells = <0>;
+            bindings = <&kp LC(UP_ARROW)>, <&kp LG(UP_ARROW)>;
+        };
+
         ht: hold_tap {
             display-name = "hold_tap";
             compatible = "zmk,behavior-hold-tap";
@@ -97,18 +166,18 @@
             bindings = <
 &kp Q       &kp W       &kp E        &kp R         &kp T            &kp Y    &kp U              &kp I        &kp O       &kp P
 &ht LGUI A  &ht LALT S  &ht LCTRL D  &ht LSHIFT F  &kp G            &kp H    &ht J RIGHT_SHIFT  &ht RCTRL K  &ht RALT L  &ht RGUI SEMICOLON
-&kp Z       &kp X       &kp C        &kp V         &kp B            &kp N    &kp M              &kp COMMA    &kp DOT     &kp SLASH
-                                     &lt 4 TAB     &kp BACKSPACE    &kp DEL  &lt 3 SPACE
+&lt 2 Z       &kp X       &kp C        &kp V         &kp B            &kp N    &kp M              &kp COMMA    &kp DOT     &lt 1 SLASH
+                                     &showscreen     &kp BACKSPACE    &kp DEL  &lt 3 SPACE
             >;
         };
 
         windows_layer {
             display-name = "WIN";
             bindings = <
-&kp Q  &kp W       &kp E       &kp R        &kp T         &kp Y      &kp U        &kp I       &kp O       &kp P
-&kp A  &ht LALT S  &ht LGUI D  &ht LCTRL F  &kp G         &kp H      &ht RCTRL J  &ht RGUI K  &ht RALT L  &kp BSPC
-&kp Z  &kp X       &kp C       &kp V        &kp B         &kp N      &kp M        &kp COMMA   &kp DOT     &kp ENTER
-                               &lt LEF TAB  &kp LSHIFT    &kp SPACE  &lt RIG TAB
+&trans  &trans        &trans           &trans       &trans         &trans  &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &trans
+&trans  &trans        &kp LC(LS(TAB))  &kp LC(TAB)  &trans         &trans  &kp NUMBER_4  &kp N5        &kp NUMBER_6  &trans
+&trans  &kp LEFT_GUI  &mkp MB4         &mkp MB1     &mkp MB5       &trans  &kp N7        &kp N8        &kp N9        &kp N0
+                                       &showscreen  &kp TAB        &trans  &trans
             >;
         };
 
